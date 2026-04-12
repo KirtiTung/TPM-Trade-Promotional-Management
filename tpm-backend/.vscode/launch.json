@@ -2,11 +2,11 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Spring Boot-ProductApplication<product>",
+            "name": "Spring Boot-TpmBackendApplication<tpm-backend>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "mainClass": "com.kirti.product.product.ProductApplication",
-            "projectName": "product",
+            "mainClass": "com.kirti.tpm.TpmBackendApplication",
+            "projectName": "tpm-backend",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

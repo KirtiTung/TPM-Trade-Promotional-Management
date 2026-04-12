@@ -3,7 +3,10 @@ package com.kirti.tpm.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+
 import org.springframework.cglib.core.Local;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kirti.tpm.dto.ApiResponse;
 import com.kirti.tpm.dto.PromotionRequest;
 import com.kirti.tpm.entity.Promotion;
 import com.kirti.tpm.entity.PromotionStatus;
@@ -47,20 +51,20 @@ public class PromotionController {
     }
 
     @GetMapping
-    public List<Promotion> getAll(){
-        return service.getAll();
+    public ApiResponse<List<Promotion>> getAll(){
+        return new ApiResponse<>("Fetched all promotions",service.getAll());
     }
     
     @GetMapping("/{id}")
-    public Promotion getById(@PathVariable Long id){
-        return service.getById(id)
-        .orElseThrow(()-> new RuntimeException("Promotion not Found"));
+    public ApiResponse<Promotion> getById(@PathVariable Long id){
+        return new ApiResponse<Promotion>("Fetched promotion by id", service.getById(id)
+        .orElseThrow(()-> new RuntimeException("Promotion not Found")));
     }
 
     @DeleteMapping("/{id}")
-    public String deleteById(@PathVariable Long id) {
+    public ApiResponse<String> deleteById(@PathVariable Long id) {
         service.delete(id);
-        return "Deleted Successfully";
+        return new ApiResponse<String>("Deleated Successfully", null);
     }
 
     @PutMapping("/{id}")
@@ -99,4 +103,19 @@ public class PromotionController {
     @RequestParam(required = false) PromotionStatus status){
         return service.filterPromotion(start,end,status);
     }
+
+    @GetMapping("/pagination")
+    public Page<Promotion> getPaginatedPromotions(@RequestParam int page,@RequestParam int size){
+        return service.getPaginatedPromotions(page,size);
+    }
+    @GetMapping("/pagination-filter")
+    public Page<Promotion> getPaginatedFilterPoromotionsPage(
+        @RequestParam(required = false)  PromotionStatus status,
+        @RequestParam(required = false) LocalDate start,
+        @RequestParam(required = false) LocalDate end,
+        @RequestParam int page,
+        @RequestParam int size) {
+        return service.getPaginatedFilterPoromotionsPage(status,start,end,page,size);
+    }
+    
 }

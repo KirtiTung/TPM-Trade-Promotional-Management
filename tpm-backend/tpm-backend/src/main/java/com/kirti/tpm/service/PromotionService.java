@@ -13,6 +13,10 @@ import com.kirti.tpm.entity.Promotion;
 import com.kirti.tpm.entity.PromotionStatus;
 import com.kirti.tpm.repository.PromotionRepository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+
 import jakarta.validation.Valid;
 
 @Service
@@ -115,6 +119,27 @@ public class PromotionService {
     public List<Promotion> filterPromotion(LocalDate start, LocalDate end, PromotionStatus status) {
         
         return repo.filterPromotions(start, end, status);
+    }
+
+    public Page<Promotion> getPaginatedPromotions(int page, int size) {
+        // TODO Auto-generated method stub
+        Pageable pageable=PageRequest.of(page,size);
+        return repo.findAll(pageable);
+    }
+
+    public Page<Promotion> getPaginatedFilterPoromotionsPage(PromotionStatus status, 
+        LocalDate start, 
+        LocalDate end,
+        int page, 
+        int size) {
+            
+            Pageable pageable=PageRequest.of(page,size);
+            return repo.filterPromotions(
+                status,
+                start,
+                end,
+                pageable
+            );
     }
 
 }
