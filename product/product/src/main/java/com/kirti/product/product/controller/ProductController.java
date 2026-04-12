@@ -1,6 +1,9 @@
-package com.kirti.product.product;
+package com.kirti.product.product.controller;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import com.kirti.product.product.entity.Product;
+import com.kirti.product.product.service.ProductService;
 
 import java.time.LocalDate;
 

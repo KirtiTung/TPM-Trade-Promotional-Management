@@ -1,6 +1,9 @@
-package com.kirti.product.product;
+package com.kirti.product.product.service;
 
 import org.springframework.stereotype.Service;
+
+import com.kirti.product.product.entity.Product;
+import com.kirti.product.product.repository.ProductRepository;
 
 @Service
 public class ProductService {
