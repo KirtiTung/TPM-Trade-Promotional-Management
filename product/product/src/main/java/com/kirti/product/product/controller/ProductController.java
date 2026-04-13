@@ -10,6 +10,10 @@ import java.time.LocalDate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -26,6 +30,13 @@ public class ProductController {
         product.setValidThru(LocalDate.of(9999,12,31));
         return service.create(product);
     }
+
+    @GetMapping("/{id}")
+    public Product getMethodName(@PathVariable int id) {
+        return service.getBySku(id);
+    }
+    
+    
     
 
 }

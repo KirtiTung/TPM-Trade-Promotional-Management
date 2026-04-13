@@ -18,4 +18,9 @@ public class ProductService {
         return repo.save(product);
     }
 
+    public Product getBySku(int id) {
+        // TODO Auto-generated method stub
+       return repo.findBySku(id);
+    }
+
 }

@@ -2,11 +2,39 @@
     "configurations": [
         {
             "type": "java",
+            "name": "EurekaApplication",
+            "request": "launch",
+            "mainClass": "com.eureka.EurekaApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-ProductApplication<product>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "mainClass": "com.kirti.product.product.ProductApplication",
             "projectName": "product",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=51199 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=product"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-EurekaApplication<eureka>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.eureka.EurekaApplication",
+            "projectName": "eureka",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-TpmBackendApplication<tpm-backend>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.kirti.tpm.TpmBackendApplication",
+            "projectName": "tpm-backend",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

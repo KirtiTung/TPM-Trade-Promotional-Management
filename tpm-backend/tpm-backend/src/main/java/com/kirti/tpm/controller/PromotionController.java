@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kirti.tpm.dto.ApiResponse;
+import com.kirti.tpm.dto.ProductDTO;
 import com.kirti.tpm.dto.PromotionRequest;
 import com.kirti.tpm.entity.Promotion;
 import com.kirti.tpm.entity.PromotionStatus;
+import com.kirti.tpm.service.ProductClient;
 import com.kirti.tpm.service.PromotionService;
 
 import jakarta.validation.Valid;
@@ -33,9 +35,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PromotionController {
     
     private final PromotionService service;
+    private final ProductClient productClient;
 
-    public PromotionController(PromotionService service){
+    public PromotionController(PromotionService service,ProductClient productClient){
         this.service=service;
+        this.productClient=productClient;
     }
     @PostMapping
     public Promotion create(@RequestBody @Valid PromotionRequest request){
@@ -117,5 +121,11 @@ public class PromotionController {
         @RequestParam int size) {
         return service.getPaginatedFilterPoromotionsPage(status,start,end,page,size);
     }
+
+    @GetMapping("/product/{id}")
+    public ProductDTO getMethodName(@PathVariable int id) {
+        return productClient.getProductById(id);
+    }
+    
     
 }
