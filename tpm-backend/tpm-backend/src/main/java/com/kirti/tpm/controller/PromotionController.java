@@ -4,9 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +18,7 @@ import com.kirti.tpm.dto.ApiResponse;
 import com.kirti.tpm.dto.ProductDTO;
 import com.kirti.tpm.dto.PromotionRequest;
 import com.kirti.tpm.entity.Promotion;
+import com.kirti.tpm.entity.PromotionProduct;
 import com.kirti.tpm.entity.PromotionStatus;
 import com.kirti.tpm.service.ProductClient;
 import com.kirti.tpm.service.PromotionService;
@@ -124,8 +123,12 @@ public class PromotionController {
 
     @GetMapping("/product/{id}")
     public ProductDTO getMethodName(@PathVariable int id) {
-        return productClient.getProductById(id);
+        return productClient.getProductBySku(id);
     }
     
+    @GetMapping("/product/all")
+    public List<ProductDTO> getAllProducts(){
+        return productClient.getAllProducts();
+    }
     
 }

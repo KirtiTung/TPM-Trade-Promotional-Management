@@ -6,6 +6,7 @@ import com.kirti.product.product.entity.Product;
 import com.kirti.product.product.service.ProductService;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +38,9 @@ public class ProductController {
     }
     
     
-    
+    @GetMapping("/all")
+    public List<Product> getAllProduct(){
+        return service.getAllProduct();
+    }
 
 }

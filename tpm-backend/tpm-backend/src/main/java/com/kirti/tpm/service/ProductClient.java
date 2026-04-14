@@ -11,5 +11,8 @@ import com.kirti.tpm.dto.ProductDTO;
 @FeignClient(name = "PRODUCT-SERVICE")
 public interface ProductClient {
     @GetMapping("/product/{id}")
-    ProductDTO getProductById(@PathVariable("id") int id);
+    ProductDTO getProductBySku(@PathVariable("id") int id);
+
+    @GetMapping("/product/all")
+    List<ProductDTO> getAllProducts();
 }
