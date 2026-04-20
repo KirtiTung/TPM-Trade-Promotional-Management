@@ -76,18 +76,14 @@ public class PromotionService {
             throw new IllegalArgumentException("Start date cannot be after end date");
         }
 
-        if(promotion.getDiscount()<=0 || promotion.getDiscount()>100){
-            throw new IllegalArgumentException("Discount must be between 1 to 100");
-        }
-
         if(promotion.getStartDate().isBefore(LocalDate.now())){
             throw new IllegalArgumentException("Start Date cannot be in the past");
         }
 
     }
 
-    public Promotion updatePromotion(Long id, PromotionRequest promotion) {
-        Promotion existing= getById(id).orElseThrow(()-> new RuntimeException("Promotion dosen't exist please create it from fresh"));
+    public Promotion updatePromotion(Long id, PromotionRequest promotion) { Promotion existing= getById(id).orElseThrow(()-> new RuntimeException("Promotion dosen't exist please create it from fresh"));
+       
         if(existing == null){
             throw new RuntimeException("Promotion not Found");
         }
@@ -95,7 +91,6 @@ public class PromotionService {
             throw new IllegalStateException("Only DRAFT promotion can be update. If still changes needed please raise ticket to support team.");
         }
         existing.setName(promotion.getName());
-        existing.setDiscount(promotion.getDiscount());
         existing.setStartDate(promotion.getStartDate());
         existing.setEndDate(promotion.getEndDate());
         existing.setStatus(promotion.getStatus());

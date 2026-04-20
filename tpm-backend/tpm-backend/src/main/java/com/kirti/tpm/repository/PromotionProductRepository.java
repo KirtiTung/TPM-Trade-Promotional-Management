@@ -8,4 +8,7 @@ import com.kirti.tpm.entity.PromotionProduct;
 @Repository
 public interface PromotionProductRepository extends JpaRepository<PromotionProduct,Long> {
 
+    PromotionProduct findBySkuAndPromotionId(int sku, Long promotionId);
+
+
 }

@@ -19,13 +19,14 @@ public class Promotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     private String name;
-    private double discount;
     private LocalDate startDate;
     private LocalDate endDate;
 
     @Enumerated(EnumType.STRING)
     private PromotionStatus status;
-
+    
+    @Enumerated(EnumType.STRING)
+    private PromotionType promotionType;
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/promotions")
+@CrossOrigin(origins = "*")
 public class PromotionController {
     
     private final PromotionService service;
@@ -45,10 +47,11 @@ public class PromotionController {
         
         Promotion promotion=new Promotion();
         promotion.setName(request.getName());
-        promotion.setDiscount(request.getDiscount());
         promotion.setStartDate(request.getStartDate());
         promotion.setEndDate(request.getEndDate());
         promotion.setStatus(request.getStatus());
+        System.out.println(request.getPromotionType()+" heheheheheheheheheheheheheheheheheh");
+        promotion.setPromotionType(request.getPromotionType());
 
         return service.create(promotion);
     }

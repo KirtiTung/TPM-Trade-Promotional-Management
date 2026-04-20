@@ -3,6 +3,7 @@ package com.kirti.tpm.service;
 import org.springframework.stereotype.Service;
 
 import com.kirti.tpm.dto.ProductDTO;
+import com.kirti.tpm.entity.Promotion;
 import com.kirti.tpm.entity.PromotionProduct;
 import com.kirti.tpm.repository.PromotionProductRepository;
 
@@ -23,6 +24,19 @@ public class PromotionProductService {
         pp.setSku(sku);
 
         return repo.save(pp);
+    }
+
+    public PromotionProduct getPromotionProduct(int sku, Long promotionId){
+        PromotionProduct pp=repo.findBySkuAndPromotionId(sku,promotionId);
+        return pp;
+    }
+
+    public String deletePromotionProduct(int sku, Long promotionId) {
+        // TODO Auto-generated method stub
+        PromotionProduct pp=getPromotionProduct(sku, promotionId);
+        if(pp==null) throw new RuntimeException("Promotion Product dosen't exist yet");
+        repo.delete(pp);
+        return "Deleted Successfully";
     }
 
     

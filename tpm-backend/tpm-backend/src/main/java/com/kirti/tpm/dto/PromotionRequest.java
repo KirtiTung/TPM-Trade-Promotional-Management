@@ -3,6 +3,7 @@ package com.kirti.tpm.dto;
 import java.time.LocalDate;
 
 import com.kirti.tpm.entity.PromotionStatus;
+import com.kirti.tpm.entity.PromotionType;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,13 +21,14 @@ public class PromotionRequest {
     @NotNull
     private String name;
 
-    @Min(0)
-    @Max(100)
-    private double discount;
     @NotNull
     private LocalDate startDate;
     @NotNull
     private LocalDate endDate;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private PromotionType promotionType;
 
     @NotNull
     @Enumerated(EnumType.STRING)
