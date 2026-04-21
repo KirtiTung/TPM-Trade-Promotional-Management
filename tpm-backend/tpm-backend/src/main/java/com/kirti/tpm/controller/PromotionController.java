@@ -20,7 +20,7 @@ import com.kirti.tpm.dto.ProductDTO;
 import com.kirti.tpm.dto.PromotionRequest;
 import com.kirti.tpm.entity.Promotion;
 import com.kirti.tpm.entity.PromotionProduct;
-import com.kirti.tpm.entity.PromotionStatus;
+import com.kirti.tpm.entity.enums.PromotionStatus;
 import com.kirti.tpm.service.ProductClient;
 import com.kirti.tpm.service.PromotionService;
 

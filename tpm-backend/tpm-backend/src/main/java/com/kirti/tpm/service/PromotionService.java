@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.kirti.tpm.dto.PromotionRequest;
 import com.kirti.tpm.entity.Promotion;
-import com.kirti.tpm.entity.PromotionStatus;
+import com.kirti.tpm.entity.enums.PromotionStatus;
 import com.kirti.tpm.repository.PromotionRepository;
 
 import org.springframework.data.domain.Page;

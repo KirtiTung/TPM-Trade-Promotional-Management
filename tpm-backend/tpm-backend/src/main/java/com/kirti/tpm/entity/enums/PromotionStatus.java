@@ -1,4 +1,4 @@
-package com.kirti.tpm.entity;
+package com.kirti.tpm.entity.enums;
 
 public enum PromotionStatus {
     DRAFT,

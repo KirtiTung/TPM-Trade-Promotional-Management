@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.kirti.tpm.entity.Promotion;
-import com.kirti.tpm.entity.PromotionStatus;
+import com.kirti.tpm.entity.enums.PromotionStatus;
 
 import java.rmi.registry.LocateRegistry;
 import java.time.LocalDate;

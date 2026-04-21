@@ -2,8 +2,8 @@ package com.kirti.tpm.dto;
 
 import java.time.LocalDate;
 
-import com.kirti.tpm.entity.PromotionStatus;
-import com.kirti.tpm.entity.PromotionType;
+import com.kirti.tpm.entity.enums.PromotionStatus;
+import com.kirti.tpm.entity.enums.PromotionType;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

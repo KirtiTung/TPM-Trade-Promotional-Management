@@ -1,13 +1,21 @@
 package com.kirti.tpm.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.kirti.tpm.entity.enums.PromotionStatus;
+import com.kirti.tpm.entity.enums.PromotionType;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,4 +37,8 @@ public class Promotion {
     
     @Enumerated(EnumType.STRING)
     private PromotionType promotionType;
+
+    @OneToMany(mappedBy ="promotion", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Tactic> tactics;
 }
