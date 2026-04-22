@@ -1,0 +1,11 @@
+package com.kirti.product.product.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.kirti.product.product.entity.Baseline;
+
+@Repository
+public interface BaselineRepository extends JpaRepository<Baseline,Long>{
+
+}

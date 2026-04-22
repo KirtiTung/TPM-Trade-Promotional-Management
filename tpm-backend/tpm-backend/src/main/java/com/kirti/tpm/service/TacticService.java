@@ -1,5 +1,6 @@
 package com.kirti.tpm.service;
 
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.kirti.tpm.dto.TacticRequest;
@@ -28,6 +29,10 @@ public class TacticService {
         t.setTacticType(tacticRequest.getTacticType());
 
         return repo.save(t);
+    }
+
+    public Tactic getById(Long id) {
+        return repo.findById(id).orElseThrow(()->new RuntimeException("No Tactic present for this "+id));
     }
 
 }
