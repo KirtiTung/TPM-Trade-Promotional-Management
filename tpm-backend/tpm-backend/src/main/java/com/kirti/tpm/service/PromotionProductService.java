@@ -1,5 +1,7 @@
 package com.kirti.tpm.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.kirti.tpm.dto.ProductDTO;
@@ -39,6 +41,10 @@ public class PromotionProductService {
         return "Deleted Successfully";
     }
 
+    public List<PromotionProduct> getAllProduct(Long promotionId){
+        List<PromotionProduct> app =repo.findAllByPromotionId(promotionId);
+        return app;
+    }
     
 
 

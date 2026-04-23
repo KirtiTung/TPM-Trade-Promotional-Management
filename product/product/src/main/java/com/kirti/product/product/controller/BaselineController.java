@@ -2,6 +2,7 @@ package com.kirti.product.product.controller;
 
 import java.util.UUID;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/baseline")
+@CrossOrigin(origins = "*")
 public class BaselineController {  
 
     private final BaselineService baselineService;
@@ -46,6 +48,11 @@ public class BaselineController {
         baseline.setProduct(productService.getBySku(baselineDTO.getSku()));
         
         return baselineService.create(baseline);
+    }
+
+    @GetMapping("/product/{sku}")
+    public Baseline getBaselineBySku(@PathVariable int sku){
+        return baselineService.getBaselineBySku(sku);
     }
 
 }

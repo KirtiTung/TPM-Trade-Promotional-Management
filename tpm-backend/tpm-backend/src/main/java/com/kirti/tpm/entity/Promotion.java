@@ -41,4 +41,6 @@ public class Promotion {
     @OneToMany(mappedBy ="promotion", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Tactic> tactics;
+
+    
 }

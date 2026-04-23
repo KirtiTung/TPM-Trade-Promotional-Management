@@ -31,7 +31,7 @@ public class Tactic {
     @Enumerated(EnumType.STRING)
     private TacticType tacticType;
 
-    private int discount;
+    private double discount;
     private int perProduct;
     private double lumpsum;
 
