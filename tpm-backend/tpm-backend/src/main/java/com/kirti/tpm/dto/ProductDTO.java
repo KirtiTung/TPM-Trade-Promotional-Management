@@ -1,6 +1,7 @@
 package com.kirti.tpm.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,4 +14,5 @@ public class ProductDTO {
     private double price;
     private LocalDate validFrom;
     private LocalDate validThru;
+    private List<BaselineDTO> baselines;
 }
