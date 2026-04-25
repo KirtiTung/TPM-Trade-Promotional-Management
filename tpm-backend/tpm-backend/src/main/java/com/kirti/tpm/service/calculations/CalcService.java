@@ -11,7 +11,6 @@ import com.kirti.tpm.dto.ProductDTO;
 import com.kirti.tpm.entity.Promotion;
 import com.kirti.tpm.entity.PromotionProduct;
 import com.kirti.tpm.entity.Tactic;
-import com.kirti.tpm.entity.enums.TacticType;
 import com.kirti.tpm.service.ProductClient;
 import com.kirti.tpm.service.PromotionProductService;
 import com.kirti.tpm.service.PromotionService;
@@ -24,68 +23,26 @@ public class CalcService {
     private final PromotionProductService promotionProductService;
     private final ProductClient productClient;
     private final PromotionService promotionService;
+    private final PriceService priceService;
+    private final UpliftService upliftService;
+    private final RevenueService revenueService;
 
     public CalcService(TacticService tacticService,
             PromotionProductService promotionProductService,
             ProductClient productClient,
-            PromotionService promotionService) {
+            PromotionService promotionService,
+            PriceService priceService,
+            UpliftService upliftService,
+            RevenueService revenueService) {
         this.tacticService = tacticService;
         this.promotionProductService = promotionProductService;
         this.productClient = productClient;
         this.promotionService = promotionService;
+        this.priceService=priceService;
+        this.upliftService=upliftService;
+        this.revenueService=revenueService;
     }
 
-    public double calculateFinalPrice(ProductDTO productDTO, Tactic tactic) {
-        double price = productDTO.getPrice();
-        double discount = tactic.getDiscount();
-        TacticType tacticType = tactic.getTacticType();
-
-        switch (tacticType) {
-            case BOGO:
-                return price;
-            case FLAT_DISCOUNT_PERCENTAGE:
-                return price - (price * (discount / 100.0));
-            case FLAT_DISCOUNT_PRICE:
-                return price - discount;
-            default:
-                return price;
-        }
-    }
-
-    public int calculateUpliftVolume(BaselineDTO baseline, Tactic tactic) {
-        int baseVolume = baseline.getVolume();
-
-        double upliftFactor = getUpliftFactor(tactic);
-
-        return (int) (baseVolume * (1 + upliftFactor));
-    }
-
-    private double getUpliftFactor(Tactic tactic) {
-        switch (tactic.getTacticType()) {
-            case FLAT_DISCOUNT_PERCENTAGE:
-                if (tactic.getDiscount() >= 20)
-                    return 0.5;
-                if (tactic.getDiscount() >= 10)
-                    return 0.2;
-                return 0.1;
-
-            case FLAT_DISCOUNT_PRICE:
-                return 0.15;
-
-            case BOGO:
-                return 0.5;
-
-            default:
-                return 0;
-        }
-    }
-
-    public double calculateRevenue(ProductDTO product, BaselineDTO baseline, Tactic tactic) {
-        double finalPrice = calculateFinalPrice(product, tactic);
-        int upliftedVolume = calculateUpliftVolume(baseline, tactic);
-
-        return finalPrice * upliftedVolume;
-    }
 
     public List<CalcTacticDTO> getUpliftPriceRevenue(Long id) {
         List<CalcTacticDTO> allCalcTacticDTOs = new ArrayList<>();
@@ -115,9 +72,9 @@ public class CalcService {
                 calcTacticDTO.setPromotionId(promotionProduct.getPromotionId());
                 calcTacticDTO.setSku(product.getSku());
                 calcTacticDTO.setTacticId(tactic.getId());
-                calcTacticDTO.setFinalPrice(calculateFinalPrice(product, tactic));
-                calcTacticDTO.setUpliftVolume(calculateUpliftVolume(baseline, tactic));
-                calcTacticDTO.setRevenue(calculateRevenue(product, baseline, tactic));
+                calcTacticDTO.setFinalPrice(priceService.calculateFinalPrice(product, tactic));
+                calcTacticDTO.setUpliftVolume(upliftService.calculateUpliftVolume(baseline, tactic));
+                calcTacticDTO.setRevenue(revenueService.calculateRevenue(calcTacticDTO.getFinalPrice(),calcTacticDTO.getUpliftVolume()));
                 allCalcTacticDTOs.add(calcTacticDTO);
             }
 

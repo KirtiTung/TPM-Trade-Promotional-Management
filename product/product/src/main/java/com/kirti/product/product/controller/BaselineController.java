@@ -1,5 +1,6 @@
 package com.kirti.product.product.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -51,7 +52,7 @@ public class BaselineController {
     }
 
     @GetMapping("/product/{sku}")
-    public Baseline getBaselineBySku(@PathVariable int sku){
+    public List<Baseline> getBaselineBySku(@PathVariable int sku){
         return baselineService.getBaselineBySku(sku);
     }
 

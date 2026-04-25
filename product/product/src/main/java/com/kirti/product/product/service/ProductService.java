@@ -22,7 +22,9 @@ public class ProductService {
 
     public Product getBySku(int id) {
         // TODO Auto-generated method stub
-       return repo.findBySku(id);
+        Product product=repo.findBySku(id);
+        if(product==null) throw new RuntimeException("No product found which sku "+id);
+       return product;
     }
 
     public List<Product> getAllProduct() {

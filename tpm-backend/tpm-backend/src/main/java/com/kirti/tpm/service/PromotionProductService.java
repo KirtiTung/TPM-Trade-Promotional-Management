@@ -22,6 +22,8 @@ public class PromotionProductService {
 
     public PromotionProduct addProductToPromotion(int sku, Long promotionId) {
         PromotionProduct pp=new PromotionProduct();
+        PromotionProduct x=repo.getAnyPP(sku,promotionId);
+        if(x!=null) throw new RuntimeException("this product is already added to promotion");
         pp.setPromotionId(promotionId);
         pp.setSku(sku);
 

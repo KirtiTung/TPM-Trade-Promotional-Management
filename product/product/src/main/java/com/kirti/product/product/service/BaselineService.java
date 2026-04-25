@@ -1,5 +1,6 @@
 package com.kirti.product.product.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.management.RuntimeErrorException;
@@ -29,10 +30,10 @@ public class BaselineService {
         return baselineRepository.save(baseline);
     }
 
-    public Baseline getBaselineBySku(int sku) {
+    public List<Baseline> getBaselineBySku(int sku) {
         // TODO Auto-generated method stub
         Product product=productService.getBySku(sku);
-        return baselineRepository.findByProduct(product);
+        return baselineRepository.findAllByProduct(product);
     }
 
     
