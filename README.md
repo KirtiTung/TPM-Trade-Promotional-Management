@@ -1,143 +1,149 @@
-# 🚀 TPM Backend System (Trade Promotion Management)
+# 🚀 Trade Promotion Management (TPM) Backend System
 
 ## 📌 Overview
+The Trade Promotion Management (TPM) Backend System is a microservices-based application built using Spring Boot to simulate real-world retail/FMCG promotion workflows.
 
-The Trade Promotion Management (TPM) Backend System is a Spring Boot–based microservices-driven application designed to manage promotional campaigns, product mappings, and trade calculations.
-
-It enables businesses to create, manage, and evaluate promotions with structured workflows and scalable backend architecture.
-
----
-
-## 🧩 Core Modules
-
-### 🔹 Product Service
-- Manages product master data
-- Handles SKU, pricing, and validity
-
-### 🔹 TPM Service
-- Manages promotions and tactics
-- Handles promotion-product mapping
-- Applies business rules and validations
+It enables businesses to:
+- Manage products and SKU-level pricing  
+- Define baseline sales (FORECAST vs ACTUAL)  
+- Create and manage promotions  
+- Apply promotional tactics (discounts, lump sum, etc.)  
+- Calculate price impact, uplift volume, and revenue  
 
 ---
 
-## 🎯 Key Features
-
-- Promotion lifecycle management (**DRAFT → APPROVED → ACTIVE**)  
-- Support for multiple promotion tactics:
-  - Flat Discount  
-  - Buy One Get One (BOGO)  
-- Product-to-promotion mapping  
-- Dynamic filtering (status, date range)  
-- Pagination and sorting  
-- Validation and exception handling  
-- Microservice-based architecture  
+## 🧠 System Architecture
+- Eureka Server → Service discovery  
+- Product Service → Manages products & baseline data  
+- TPM Service → Handles promotions, tactics, and calculations  
 
 ---
 
-## 🏗️ Architecture
-            ┌──────────────────────┐
-            │   Client / Postman   │
-            └─────────┬────────────┘
-                      │
-                      ▼
-            ┌──────────────────────┐
-            │   TPM Service        │
-            │----------------------│
-            │ Promotion            │
-            │ PromotionProduct     │
-            │ Business Logic       │
-            └─────────┬────────────┘
-                      │ (REST API Call)
-                      ▼
-            ┌──────────────────────┐
-            │   Product Service    │
-            │----------------------│
-            │ Product              │
-            │ Pricing              │
-            └──────────────────────┘
-	
+## 🔄 End-to-End Workflow
+
+### 1. Product & Baseline Setup
+
+Create Product:
+POST /product  
+{
+  "name": "Dairy Milk",
+  "sku": 96385,
+  "price": 10.00,
+  "validFrom": "2021-01-01"
+}
+
+Create Baseline:
+POST /baseline  
+{
+  "sku": "96385",
+  "startDate": "2026-01-11",
+  "endDate": "2026-01-17",
+  "volume": 50,
+  "baselineType": "FORECAST"
+}
+
 ---
 
-## ⚙️ Tech Stack
+### 2. Promotion Creation
 
-- Java 17  
-- Spring Boot  
-- Spring Data JPA (Hibernate)  
+POST /promotions  
+{
+  "name": "MEMBER OF YEAR SALES",
+  "promotionType": "LONG_TERM",
+  "startDate": "2026-01-01",
+  "endDate": "2027-01-02",
+  "status": "DRAFT"
+}
+
+---
+
+### 3. Map Product to Promotion
+
+GET /promotion-product/add?sku=96385&promotionId=1  
+
+---
+
+### 4. Apply Tactics
+
+POST /promotion/tactic  
+{
+  "promotion_id": 1,
+  "tacticType": "FLAT_DISCOUNT_PERCENTAGE",
+  "discount": 10,
+  "perProduct": 0,
+  "lumpsum": 10000.00
+}
+
+---
+
+### 5. Run Calculation Engine
+
+GET /calc/tactic/{tacticId}
+
+Sample Output:
+{
+  "sku": 96385,
+  "finalPrice": 9.0,
+  "upliftVolume": 96,
+  "revenue": 864.0
+}
+
+---
+
+## ⚙️ Calculation Engine Design
+- PriceService → Applies discount  
+- UpliftService → Adjusts baseline volume  
+- RevenueService → Calculates final revenue  
+
+---
+
+## 🧩 Key Features
+- Microservices-based architecture  
+- SKU-level promotion mapping  
+- Baseline modeling (FORECAST vs ACTUAL)  
+- Tactic-driven promotion engine  
+- Modular calculation services  
+- REST APIs with Swagger  
+- Clean layered architecture  
+
+---
+
+## 🛠️ Tech Stack
+- Java, Spring Boot  
+- Spring Data JPA, Hibernate  
 - MySQL  
-- REST APIs  
+- REST APIs, Swagger  
 - Maven  
-- Postman  
 
 ---
 
-## 🔗 API Endpoints
-
-### 🔹 Promotion APIs
-
-| Method | Endpoint | Description |
-|--------|---------|------------|
-| POST | `/promotions` | Create promotion |
-| GET | `/promotions` | Get all promotions |
-| PUT | `/promotions/{id}/approve` | Approve promotion |
-| PUT | `/promotions/{id}/activate` | Activate promotion |
+## 📁 Project Structure
+eureka/ → Service discovery  
+product/ → Product & baseline service  
+tpm-backend/ → Promotion, tactic & calculation service  
 
 ---
 
-### 🔹 Query APIs
-
-| Method | Endpoint | Description |
-|--------|---------|------------|
-| GET | `/promotions/status/{status}` | Get by status |
-| GET | `/promotions/active` | Get active promotions |
-| GET | `/promotions/date-range` | Filter by date |
-| GET | `/promotions/filter` | Combined filters |
+## 🚀 Future Enhancements
+- Apache Kafka for event-driven processing  
+- Redis for caching  
+- API Gateway  
+- Docker & Cloud deployment  
 
 ---
 
-### 🔹 Pagination APIs
-
-| Method | Endpoint | Description |
-|--------|---------|------------|
-| GET | `/promotions/paginated` | Paginated data |
-| GET | `/promotions/filter-paginated` | Filter + pagination |
-
----
-
-### 🔹 Promotion-Product APIs
-
-| Method | Endpoint | Description |
-|--------|---------|------------|
-| POST | `/promotion-products` | Add product to promotion |
-| GET | `/promotion-products/{promotionId}` | Get products for promotion |
+## 🧠 Key Learnings
+- Designing real-world domain models  
+- Handling time-based baseline data  
+- Structuring business logic into services  
+- Building a calculation engine  
 
 ---
 
-## 🔄 Service-to-Service Communication
-
-- TPM Service interacts with Product Service via REST APIs  
-- Product data is fetched using SKU  
-- No direct database relationship (microservice separation)  
+## 🔗 Author
+Kirti Bardhan Tung  
+Backend Developer | Java | Spring Boot  
 
 ---
 
-## ⚡ Business Logic Highlights
-
-- Validates promotion dates and discount constraints  
-- Ensures controlled state transitions  
-- Supports product-level discount overrides  
-- Prevents invalid promotion configurations  
-
----
-
-## 🛠️ Setup & Run
-
-### 🔹 1. Clone the Repository
-```bash
-git clone https://github.com/your-username/tpm-backend.git
-cd tpm-backend
-
-##👨‍💻 Author
-
--Kirti Bardhan Tung
--Backend Developer | Java | Spring Boot
+## ⭐ Give a star if you like this project!
