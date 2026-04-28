@@ -1,7 +1,9 @@
 package com.kirti.tpm.service.calculations;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -51,9 +53,18 @@ public class CalcService {
         List<PromotionProduct> app = promotionProductService.getAllProduct(promotionId);
         Promotion promotion = promotionService.getById(promotionId)
                 .orElseThrow(() -> new RuntimeException("No Promotion Found"));
-
+        List<Integer> allSKU=new ArrayList<>();
+        for(PromotionProduct pp :app){
+            allSKU.add(pp.getSku());
+        }
+        List<ProductDTO> allProductDTOs=productClient.getAllProductsBySkus(allSKU);
+        Map<Integer,ProductDTO> skuMap=new HashMap<>();
+        for(ProductDTO product:allProductDTOs){
+            skuMap.put(product.getSku(),product);
+        }
+        
         for (PromotionProduct promotionProduct : app) {
-            ProductDTO product = productClient.getProductBySku(promotionProduct.getSku());
+            ProductDTO product = skuMap.get(promotionProduct.getSku());
             // System.out.println(product.getBaselines());
             List<BaselineDTO> baselines = product.getBaselines();
             List<BaselineDTO> baselinesUnderPromotionTimeLine = new ArrayList<>();

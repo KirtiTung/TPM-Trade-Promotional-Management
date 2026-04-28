@@ -1,5 +1,7 @@
 package com.kirti.tpm.service;
 
+import java.util.List;
+
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,11 @@ public class TacticService {
 
     public Tactic getById(Long id) {
         return repo.findById(id).orElseThrow(()->new RuntimeException("No Tactic present for this "+id));
+    }
+
+    public List<Tactic> getAll() {
+        // TODO Auto-generated method stub
+        return repo.findAll();
     }
 
 }

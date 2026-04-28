@@ -1,5 +1,6 @@
 package com.kirti.product.product.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -30,6 +31,15 @@ public class ProductService {
     public List<Product> getAllProduct() {
         // TODO Auto-generated method stub
        return repo.findAll();
+    }
+
+    public List<Product> getAllProductsBySkus(List<Integer> skus) {
+        // TODO Auto-generated method stub
+        List<Product> products=new ArrayList<>();
+        for(int sku:skus){
+            products.add(getBySku(sku));
+        }
+        return products;
     }
 
 }

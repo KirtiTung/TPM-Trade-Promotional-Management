@@ -1,5 +1,8 @@
 package com.kirti.tpm.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +16,7 @@ import com.kirti.tpm.service.TacticService;
 
 @RestController
 @RequestMapping("promotion/tactic")
+@CrossOrigin("*")
 public class TacticController {
 
     private final TacticService tacticService;
@@ -29,6 +33,11 @@ public class TacticController {
     @GetMapping("/{id}")
     public Tactic getById(@PathVariable Long id){
         return tacticService.getById(id);
+    }
+
+    @GetMapping
+    public List<Tactic> getAllById(){
+        return tacticService.getAll();
     }
 
 }

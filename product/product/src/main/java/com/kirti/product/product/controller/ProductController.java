@@ -44,4 +44,9 @@ public class ProductController {
         return service.getAllProduct();
     }
 
+    @PostMapping("/skus")
+    public List<Product> getAllProductsBySkus(@RequestBody List<Integer> skus){
+        return service.getAllProductsBySkus(skus);
+    }
+
 }

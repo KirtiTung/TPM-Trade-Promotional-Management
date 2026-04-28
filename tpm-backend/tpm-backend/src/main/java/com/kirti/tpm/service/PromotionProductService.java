@@ -45,6 +45,7 @@ public class PromotionProductService {
 
     public List<PromotionProduct> getAllProduct(Long promotionId){
         List<PromotionProduct> app =repo.findAllByPromotionId(promotionId);
+        System.out.println(app);
         return app;
     }
     
